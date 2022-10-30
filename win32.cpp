@@ -62,7 +62,7 @@ int initWindow(int width, int height, const char *title)
   LPVOID ptr;
   BITMAPINFO bi = {{sizeof(BITMAPINFOHEADER),
                     width, -height, 1, 32, BI_RGB,
-                    width * height * 4, 0, 0, 0, 0}};
+                    static_cast<DWORD>(width * height * 4), 0, 0, 0, 0}};
 
   window->bm_dib = CreateDIBSection(window->mem_dc, &bi, DIB_RGB_COLORS, &ptr, 0, 0);
   assert(window->bm_dib != NULL);

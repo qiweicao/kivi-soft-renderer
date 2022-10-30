@@ -79,7 +79,7 @@ void clearFrameBuffer(int width, int height, unsigned char *framebuffer)
 void clearZBuffer(int width, int height, float *zbuffer)
 {
   for (int i = 0; i<width*height;i++ )
-    zbuffer[i] = std::numeric_limits<float>::max();
+    zbuffer[i] = (std::numeric_limits<float>::max)();
 }
 
 // vec3f barycentric(std::vector<vec2i> &vertexs, vec2i P) {
@@ -117,7 +117,7 @@ vec3f barycentric(vec3f *vertexs, vec2f P)
 {
 
   vec3f u = vec3f(vertexs[1][0] - vertexs[0][0], vertexs[2][0] - vertexs[0][0], vertexs[0][0] - P[0]) ^ vec3f(vertexs[1][1] - vertexs[0][1], vertexs[2][1] - vertexs[0][1], vertexs[0][1] - P[1]);
-  
+
   return vec3f(1.f - (u.x + u.y) / u.z, u.x / u.z, u.y / u.z);
 }
 
@@ -132,17 +132,17 @@ void rasterizeTriangle(unsigned char *framebuffer, float *zbuffer, IShader &shad
   vec2f bboxmax;
   for (int i = 0; i < 2; i++)
   {
-    bboxmin[i] = std::min(shader.payload.screenPos[0][i], std::min(shader.payload.screenPos[1][i], shader.payload.screenPos[2][i]));
-    bboxmax[i] = std::max(shader.payload.screenPos[0][i], std::max(shader.payload.screenPos[1][i], shader.payload.screenPos[2][i]));
+    bboxmin[i] = (std::min)(shader.payload.screenPos[0][i], (std::min)(shader.payload.screenPos[1][i], shader.payload.screenPos[2][i]));
+    bboxmax[i] = (std::max)(shader.payload.screenPos[0][i], (std::max)(shader.payload.screenPos[1][i], shader.payload.screenPos[2][i]));
   }
   int min_x = (int)std::floor(bboxmin[0]);
   int max_x = (int)std::ceil(bboxmax[0]);
   int min_y = (int)std::floor(bboxmin[1]);
   int max_y = (int)std::ceil(bboxmax[1]);
-  min_x = std::max(min_x, 0);
-  max_x = std::min(max_x, WINDOW_WIDTH - 1);
-  min_y = std::max(min_y, 0);
-  max_y = std::min(max_y, WINDOW_HEIGHT - 1);
+  min_x = (std::max)(min_x, 0);
+  max_x = (std::min)(max_x, WINDOW_WIDTH - 1);
+  min_y = (std::max)(min_y, 0);
+  max_y = (std::min)(max_y, WINDOW_HEIGHT - 1);
   vec2i p;
   for (p.x = min_x; p.x <= max_x; p.x++)
   {
