@@ -1,14 +1,11 @@
-#ifndef PIPELINE_H
-#define PIPELINE_H
+
 
 #include <vector>
 #include <cassert>
 #include <algorithm>
 
-#include "win32.h"
-#include "math.hpp"
-#include "shader.hpp"
-
+#include "shader.h"
+#include "pipeline.h"
 
 void setPixel(int x, int y, const Color color, unsigned char *frameBuffer)
 {
@@ -167,5 +164,3 @@ void setTriangles(unsigned char *framebuffer, float *zbuffer, IShader &shader, i
   shader.vertexShader(nface);
   rasterizeTriangle(framebuffer,zbuffer,shader);
 }
-
-#endif

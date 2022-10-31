@@ -3,10 +3,10 @@
 
 #include "win32.h"
 #include "math.hpp"
-#include "pipeline.hpp"
+#include "pipeline.h"
 #include "model.h"
 #include "camera.h"
-#include "shader.hpp"
+#include "shader.h"
 #include "tgaimage.h"
 
 const vec3f Eye(0, 1, 1);
@@ -48,7 +48,7 @@ int main(int, char **)
   //setTriangle(vertexs,Color(255,0,0),framebuffer);
   while (!window->isClose)
   {
-    
+
     dispatchMsg();
     clearFrameBuffer(width,height,framebuffer);
     clearZBuffer(width,height,zbuffer);
@@ -59,14 +59,14 @@ int main(int, char **)
     shaderOfModel->payload.projectMatrix=getProjectMatrix(60.0f,((float)width/height),Z_NEAR,Z_FAR);
     shaderOfModel->payload.mvpMatrix=shaderOfModel->payload.projectMatrix*shaderOfModel->payload.viewMatrix*shaderOfModel->payload.modelMatrix;
 
-    
+
     for(int i=0;i<model.nfaces();i++)
     {
       setTriangles(framebuffer,zbuffer,*shaderOfModel,i);
     }
     // setTriangles(framebuffer,zbuffer,*shaderOfModel,0);
     // setTriangles(framebuffer,zbuffer,*shaderOfModel,1);
-    
+
     drawWindow(framebuffer);
     //Sleep(1);
   }
