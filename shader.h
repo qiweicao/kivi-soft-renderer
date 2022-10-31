@@ -1,7 +1,7 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include "math.hpp"
+#include "linear_algebra.h"
 #include "camera.h"
 #include "model.h"
 

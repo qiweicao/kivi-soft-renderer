@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "win32.h"
-#include "math.hpp"
+#include "linear_algebra.h"
 #include "pipeline.h"
 #include "model.h"
 #include "camera.h"

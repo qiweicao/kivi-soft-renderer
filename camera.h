@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "math.hpp"
+#include "linear_algebra.h"
 
 const float YAW = -90.0f;
 const float PITCH = 0.0f;

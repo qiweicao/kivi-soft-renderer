@@ -1,7 +1,7 @@
 #ifndef PIPELINE_H
 #define PIPELINE_H
 
-#include "math.hpp"
+#include "linear_algebra.h"
 #include "shader.h"
 
 void setPixel(int x, int y, const Color color, unsigned char *frameBuffer);

@@ -9,12 +9,10 @@
 
 #include "global.h"
 
-// 颜色结构
-//struct Color{ int r,g,b; Color(int rr,int gg,int bb):r(rr),b(bb),g(gg){} };
 
 template<class T> struct Vector2
 {
-  union 
+  union
   {
     struct{T x,y;};
     struct{T u,v;};
@@ -59,39 +57,39 @@ template <class T> struct Vector3
   Vector3<T> multi (const Vector3<T> &v) const { return Vector3<T>(x*v.x, y*v.y, z*v.z); }
 };
 
-struct Vector4f
+template <class T> struct Vector4
 {
   union
   {
     struct{ float x, y, z, w;};
     float raw[4];
   };
-  Vector4f() {}
-  Vector4f(float xx, float yy, float zz, float ww) : x(xx), y(yy), z(zz), w(ww) {}
-  Vector4f(const Vector3<float> &v, float ww) : x(v.x),y(v.y),z(v.z),w(ww) {}
-  Vector4f(const std::vector<float> &v) : x(v[0]), y(v[1]), z(v[2]), w(v[3]) {}
+  Vector4<T>() {}
+  Vector4<T>(float xx, float yy, float zz, float ww) : x(xx), y(yy), z(zz), w(ww) {}
+  Vector4<T>(const Vector3<float> &v, float ww) : x(v.x),y(v.y),z(v.z),w(ww) {}
+  Vector4<T>(const std::vector<float> &v) : x(v[0]), y(v[1]), z(v[2]), w(v[3]) {}
 
   float& operator[](const size_t i)       { assert(i<4); return i<=0 ? x : raw[i]; }
   const float& operator[](const size_t i) const { assert(i<4); return i<=0 ? x : raw[i]; }
 
-  Vector4f operator+(const Vector4f &v) const { return Vector4f(x + v.x, y + v.y, z + v.z, w+v.w); }
-  Vector4f operator-(const Vector4f &v) const { return Vector4f(x - v.x, y - v.y, z - v.z, w-v.w); }
-  Vector4f operator*(float f) const { return Vector4f(x * f, y * f, z * f, w * f); }
-  float operator*(const Vector4f &v) const { return x * v.x + y * v.y + z * v.z + w * v.w; }
-  Vector4f operator/(float f) const { return Vector4f(x / f, y / f, z / f, w / f); }
+  Vector4<T> operator+(const Vector4<T> &v) const { return Vector4<T>(x + v.x, y + v.y, z + v.z, w+v.w); }
+  Vector4<T> operator-(const Vector4<T> &v) const { return Vector4<T>(x - v.x, y - v.y, z - v.z, w-v.w); }
+  Vector4<T> operator*(float f) const { return Vector4<T>(x * f, y * f, z * f, w * f); }
+  float operator*(const Vector4<T> &v) const { return x * v.x + y * v.y + z * v.z + w * v.w; }
+  Vector4<T> operator/(float f) const { return Vector4<T>(x / f, y / f, z / f, w / f); }
 
   //长度
   float length() const { return (float)sqrt(x * x + y * y + z * z + w * w); }
   //归一化
-  Vector4f normalize() const
+  Vector4<T> normalize() const
   {
     float length = this->length();
     float inv = 1.0f / length;
-    return Vector4f(x * inv, y * inv, z * inv, 1.0f);
+    return Vector4<T>(x * inv, y * inv, z * inv, 1.0f);
   }
 };
 
-class Matrix4f
+template <class T> class Matrix4
 {
 private:
   std::vector<std::vector<float>> m;
@@ -99,14 +97,14 @@ private:
 
 public:
   //默认4*4单位矩阵
-  Matrix4f(float f = 1.0f) : m(std::vector<std::vector<float>>(4, std::vector<float>(4, 0.0f))), cols(4), raws(4)
+  Matrix4<T>(float f = 1.0f) : m(std::vector<std::vector<float>>(4, std::vector<float>(4, 0.0f))), cols(4), raws(4)
   {
     m[0][0] = f;
     m[1][1] = f;
     m[2][2] = f;
     m[3][3] = f;
   }
-  Matrix4f(const std::vector<std::vector<float>> &mat) : raws(4), cols(4)
+  Matrix4<T>(const std::vector<std::vector<float>> &mat) : raws(4), cols(4)
   {
     int i, j;
     for (i = 0; i < raws; i++)
@@ -119,10 +117,10 @@ public:
   }
 
   //+
-  Matrix4f operator+(const Matrix4f &mat) const
+  Matrix4<T> operator+(const Matrix4<T> &mat) const
   {
     int i, j;
-    Matrix4f res(0.0f);
+    Matrix4<T> res(0.0f);
     for (i = 0; i < raws; i++)
     {
       for (j = 0; j < cols; j++)
@@ -134,10 +132,10 @@ public:
   }
 
   //-
-  Matrix4f operator-(const Matrix4f &mat) const
+  Matrix4<T> operator-(const Matrix4<T> &mat) const
   {
     int i, j;
-    Matrix4f res(0.0f);
+    Matrix4<T> res(0.0f);
     for (i = 0; i < raws; i++)
     {
       for (j = 0; j < cols; j++)
@@ -149,10 +147,10 @@ public:
   }
 
   //*
-  Matrix4f operator*(const Matrix4f &mat) const
+  Matrix4<T> operator*(const Matrix4<T> &mat) const
   {
     int i, j;
-    Matrix4f res(0.0f);
+    Matrix4<T> res(0.0f);
     for (i = 0; i < raws; i++)
     {
       for (j = 0; j < cols; j++)
@@ -166,38 +164,38 @@ public:
     return res;
   }
 
-  Vector4f operator*(const Vector4f &v) const
+  Vector4<T> operator*(const Vector4<T> &v) const
   {
     float x = m[0][0] * v.x + m[0][1] * v.y + m[0][2] * v.z + m[0][3] * v.w;
     float y = m[1][0] * v.x + m[1][1] * v.y + m[1][2] * v.z + m[1][3] * v.w;
     float z = m[2][0] * v.x + m[2][1] * v.y + m[2][2] * v.z + m[2][3] * v.w;
     float w = m[3][0] * v.x + m[3][1] * v.y + m[3][2] * v.z + m[3][3] * v.w;
-    return Vector4f(x, y, z, w);
+    return Vector4<T>(x, y, z, w);
   }
 
 private:
   class MatrixLoader
   {
   public:
-    MatrixLoader(Matrix4f& M, int i):M(M),i(i){}
+    MatrixLoader(Matrix4<T>& M, int i):M(M),i(i){}
     MatrixLoader operator,(const float &val)
     {
       M.m[i/4][i%4] = val;
       return MatrixLoader(M,i+1);
     }
-    private:  
-      Matrix4f &M;
+    private:
+      Matrix4<T> &M;
       int i;
   };
 public:
   MatrixLoader operator<<(const float &val)
   {
-    
+
     m[0][0] = val;
     return MatrixLoader(*this,1);
   }
 
-  friend std::ostream& operator<<(std::ostream& out, Matrix4f& mat)
+  friend std::ostream& operator<<(std::ostream& out, Matrix4<T>& mat)
   {
     for (auto v:mat.m)
     {
@@ -213,13 +211,13 @@ public:
 };
 
 
-typedef Vector2<float>  vec2f;
-typedef Vector2<int>    vec2i;
-typedef Vector3<float>  vec3f;
-typedef Vector3<int>    vec3i;
-typedef Vector3<int>    Color;
-typedef Vector4f        vec4f;
-typedef Matrix4f        mat4f;
+using vec2f = Vector2<float>;
+using vec2i = Vector2<int>;
+using vec3f = Vector3<float>;
+using vec3i = Vector3<int>;
+using Color = Vector3<int>;
+using vec4f = Vector4<float>;
+using mat4f = Matrix4<float>;
 
 
 #endif

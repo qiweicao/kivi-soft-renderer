@@ -1,4 +1,4 @@
-#include "math.hpp"
+#include "linear_algebra.h"
 #include "camera.h"
 #include "model.h"
 #include "shader.h"

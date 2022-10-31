@@ -1,6 +1,6 @@
 #include "camera.h"
 
-#include "math.hpp"
+#include "linear_algebra.h"
 #include "win32.h"
 
 

@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "math.hpp"
+#include "linear_algebra.h"
 #include "tgaimage.h"
 
 class Model
@@ -43,7 +43,7 @@ private:
   std::vector<vec3f> norms;
   std::vector<vec2f> uvs;
 
-  
+
 };
 
 #endif

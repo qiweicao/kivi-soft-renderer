@@ -2,7 +2,7 @@
 #define WIN32_H
 
 #include <Windows.h>
-#include "math.hpp"
+#include "linear_algebra.h"
 
 typedef struct mouse
 {
